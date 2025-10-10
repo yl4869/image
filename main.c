@@ -10,15 +10,11 @@
         {3,1.1,"256_1"},  
         {4,1.1,"512_1"}   
     };
-    int num_tasks = get_num_tasks(tasks);
-    sortTasksByDeadline(tasks, num_tasks);
+    sortTasksByDeadline(tasks);
     // 初始化批次集合
     Batches batches;
-    batches.max_size = 4;
-    batches.batches = (Batch *)malloc(batches.max_size * sizeof(Batch));
     //动态调度任务
-    dynamicScheduling(&batches, tasks, num_tasks);
-
+    dynamicScheduling(&batches, tasks);
     // 释放内存
     for (int i = 0; i < batches.batch_count; i++)
     {
