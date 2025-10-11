@@ -33,11 +33,11 @@ int compress_batch( Batches *batches);
 void calculate_current_time(Batches *batches); 
 int findMinTargetSizeTask(Batch *batch);
 void transfer_batch_tasks(Batch *source, Batch *destination);
-void GPU_process(Batch *batch);
+void GPU_process(Batch *batch, FILE *out);
 void init_batches(Batches *batches,Task *tasks);
 void sortTasksByDeadline(Task* tasks);
 int findBatchIndexBySize(Batches *batches, int size);
-void dynamicScheduling(Batches *batches, Task *tasks);
+void dynamicScheduling(Batches *batches, Task *tasks, FILE *out);
 void appendTaskToBatch(Batch *batch, Task *task);
 //对大小提前做一个映射（64->1,128->2,256->3,512->4）
 //第一维是原始大小（0是64，1是128，2是256，3是512）
@@ -69,7 +69,7 @@ float accuracy[4][4][4] = {
         {0.34f, 0.76f, 0.84f, 0.87f}
     }
 };
-float worst_accuracy[4]={0.40f,0.60f,0.70f,0.75f};//用于假设对于不同大小的任务的最差准确率要求已经给出
+float worst_accuracy[4]={0.40f,0.60f,0.70f,0.70f};//用于假设对于不同大小的任务的最差准确率要求已经给出
 float trans_time_size[4]={0.1,0.2,0.3,0.4};//假设对应四个尺寸的传输时间（kx+b中的k）
 float proc_time_size[4][4]={
     {0.03,0.05,0.06,0.07},
@@ -111,7 +111,7 @@ void appendTaskToBatch(Batch *batch, Task *task) {
     batch->task_count++;
 }
 // 处理任务调度的主逻辑
-void dynamicScheduling(Batches *batches, Task *tasks)
+void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
  {
     // 初始化四个批次
     init_batches(batches,tasks);
@@ -119,6 +119,9 @@ void dynamicScheduling(Batches *batches, Task *tasks)
     // 遍历所有任务并分配到对应大小的批次
     for (int i = 0; i < num_tasks; i++) {
         Task *task = &tasks[i];
+        if (task->size < 1 || task->size > 4) {
+            continue; // 防越界
+        }
         appendTaskToBatch(&batches->batches[task->size-1], task);
         calculate_current_time(batches);//计算并更新一个当前批次集合的总时间
         if(batches->current_time > batches->deadline)//如果超ddl了，就进行融合
@@ -131,7 +134,7 @@ void dynamicScheduling(Batches *batches, Task *tasks)
 
     for (int i = 0; i < batches->batch_count; i++) 
     {
-         GPU_process(&batches->batches[i]); // 假设此函数执行GPU处理
+         GPU_process(&batches->batches[i], out); // 写入文件
     }
 }
 
@@ -167,7 +170,7 @@ void init_batches(Batches *batches,Task *tasks)//初始化批次集合
         batch->end_time = 0.0f;
         batch->deadline = 0.0f;
         batch->start_time=0.0f;
-        batch->stage = 4;
+        batch->stage = 3;
     }
 }
 
@@ -177,6 +180,9 @@ int compress_batch( Batches *batches)
     for(int i=3;i>=0;i--)//按尺寸从小到大遍历，因为是压缩到最小
     {
         int batche_index= findMinTargetSizeTask(&batches->batches[i]);
+        if (batche_index == -1) {
+            continue; // 本尺寸无法再压缩，换下一个
+        }
         transfer_batch_tasks(&batches->batches[i],&batches->batches[batche_index] );
         calculate_current_time(batches);
         if(batches->current_time < batches->deadline) return 1;//成功融合使得时间小于截止期
@@ -228,16 +234,16 @@ int findMinTargetSizeTask(Batch *batch)//查找当前批次能最小缩到哪个
     return -1;//缩不了了
 }
 
-void GPU_process(Batch *batch)
+void GPU_process(Batch *batch, FILE *out)
 {
     if(batch->task_count == 0) {
-        printf("大小为%d的批次为空。\n", batch->size[0]);
+        //fprintf(out, "批次大小:%d 的批次为空.\r\n", batch->size[0]);
         return;
     }
-     printf("批次大小：%d\n",batch->size[0]);
-    for(int i=1;i<=batch->task_count;i++)
+    fprintf(out, "批次大小:%d\r\n", batch->size[0]);
+    for(int i=0;i<batch->task_count;i++)
     {
-         printf("%c\n",batch->tasks[i].id);
+        fprintf(out, "%s\r\n", batch->tasks[i].id);
     }
 }
 
