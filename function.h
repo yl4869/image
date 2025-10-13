@@ -131,11 +131,24 @@ void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
         }
     }
     //从上个循环出来，要么是任务安排完了，要么是批次压缩满了，下一步是传给GPU运行了（尚未想好）
-
+    
+    // 开始JSON数组
+    fprintf(out, "[\n");
+    
+    int first_batch = 1;
     for (int i = 0; i < batches->batch_count; i++) 
     {
-         GPU_process(&batches->batches[i], out); // 写入文件
+        if(batches->batches[i].task_count > 0) {
+            if(!first_batch) {
+                fprintf(out, ",\n");
+            }
+            GPU_process(&batches->batches[i], out); // 写入文件
+            first_batch = 0;
+        }
     }
+    
+    // 结束JSON数组
+    fprintf(out, "\n]\n");
 }
 
 
@@ -234,17 +247,38 @@ int findMinTargetSizeTask(Batch *batch)//查找当前批次能最小缩到哪个
     return -1;//缩不了了
 }
 
+// 将内部大小映射到实际大小
+int get_actual_size(int internal_size) {
+    switch(internal_size) {
+        case 1: return 64;
+        case 2: return 128;
+        case 3: return 256;
+        case 4: return 512;
+        default: return internal_size;
+    }
+}
+
 void GPU_process(Batch *batch, FILE *out)
 {
     if(batch->task_count == 0) {
-        //fprintf(out, "批次大小:%d 的批次为空.\r\n", batch->size[0]);
         return;
     }
-    fprintf(out, "批次大小:%d\r\n", batch->size[0]);
-    for(int i=0;i<batch->task_count;i++)
-    {
-        fprintf(out, "%s\r\n", batch->tasks[i].id);
+    
+    int actual_size = get_actual_size(batch->size[0]);
+    fprintf(out, "  {\n");
+    fprintf(out, "    \"size\": %d,\n", actual_size);
+    fprintf(out, "    \"images\": [\n");
+    
+    for(int i = 0; i < batch->task_count; i++) {
+        fprintf(out, "      \"%s\"", batch->tasks[i].id);
+        if(i < batch->task_count - 1) {
+            fprintf(out, ",");
+        }
+        fprintf(out, "\n");
     }
+    
+    fprintf(out, "    ]\n");
+    fprintf(out, "  }");
 }
 
 int get_num_tasks(Task *tasks)
