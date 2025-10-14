@@ -20,12 +20,6 @@
     Batches batches;
     //动态调度任务（将输出写入文件）
     dynamicScheduling(&batches, tasks, out);
-    // 释放内存
-    for (int i = 0; i < batches.batch_count; i++)
-    {
-        free(batches.batches[i].tasks);
-    }
-    free(batches.batches);
     fclose(out);
     
      return 0;
