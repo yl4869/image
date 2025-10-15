@@ -20,6 +20,17 @@ class SimpleInference:
         self.image_folder = image_folder
         self.models = {}
         
+        # 类别映射：根据训练时的文件夹顺序
+        self.class_mapping = {
+            0: "bench",
+            1: "bicycle", 
+            2: "car",
+            3: "motorcycle",
+            4: "person",
+            5: "traffic light",
+            6: "train"
+        }
+        
         # 加载所有模型
         for size, model_path in model_paths.items():
             if os.path.exists(model_path):
@@ -61,6 +72,7 @@ class SimpleInference:
                 'image_id': image_id,
                 'size': size,
                 'predicted_class': None,
+                'predicted_class_id': None,
                 'error': f'模型 {size}px 未加载'
             }
         
@@ -72,6 +84,7 @@ class SimpleInference:
                 'image_id': image_id,
                 'size': size,
                 'predicted_class': None,
+                'predicted_class_id': None,
                 'error': f'图片文件不存在: {image_path}'
             }
         
@@ -87,13 +100,15 @@ class SimpleInference:
                 probabilities = torch.softmax(outputs, dim=1)
                 confidence, prediction = torch.max(probabilities, dim=1)
                 
-                # 获取类别名称
-                predicted_class = f"Class_{prediction.item()}"
+                # 获取类别ID和对应的实际类别名称
+                predicted_class_id = prediction.item()
+                predicted_class = self.class_mapping.get(predicted_class_id, f"Unknown_Class_{predicted_class_id}")
             
             return {
                 'image_id': image_id,
                 'size': size,
-                'predicted_class': predicted_class
+                'predicted_class': predicted_class,
+                'predicted_class_id': predicted_class_id
             }
             
         except Exception as e:
@@ -101,6 +116,7 @@ class SimpleInference:
                 'image_id': image_id,
                 'size': size,
                 'predicted_class': None,
+                'predicted_class_id': None,
                 'error': str(e)
             }
 
@@ -174,7 +190,7 @@ def main():
     }
     
     # 图片文件夹路径（请根据实际情况修改）
-    image_folder = "images"  # 修改为您的图片文件夹路径
+    image_folder = 'image_list_0'  # 修改为您的图片文件夹路径
     
     # 初始化推理器
     inference = SimpleInference(model_paths, image_folder, num_classes=7)
