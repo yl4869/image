@@ -54,7 +54,6 @@ class SimpleInference:
         ])
 
     def load_images_batch(self, image_ids, size):
-        """批量加载并预处理图像，返回 (tensor, 有效image_id列表, 缺失image_id列表)"""
         transform = self.get_transform(size)
         images = []
         valid_ids = []
@@ -296,6 +295,17 @@ class SimpleInference:
             print(f"[X] 保存结果到JSON文件失败: {e}")
 
 
+def process_single_result(json_file_path, output_json_path, model_paths, image_folder, num_classes=7, inference_instance=None):
+    if inference_instance is None:
+        inference = SimpleInference(model_paths, image_folder, num_classes=num_classes)
+    else:
+        inference = inference_instance
+    
+    results = inference.process_json_file(json_file_path)
+    inference.save_results(results, output_json_path)
+    return results
+
+
 def main():
     model_paths = {
         64: 'model/model_64.pth',
@@ -308,9 +318,9 @@ def main():
     # 从JSON文件读取批次信息并进行预测
     json_file_path = "result_list/result_1/main_result.json"  
     output_json_path = "result_list/result_1/main_time.json"  
-    inference = SimpleInference(model_paths, image_folder, num_classes=7)
-    # 处理所有批次
-    results = inference.process_json_file(json_file_path)
-    inference.save_results(results, output_json_path)
+    
+    process_single_result(json_file_path, output_json_path, model_paths, image_folder, num_classes=7)
+
+
 if __name__ == '__main__':
     main()

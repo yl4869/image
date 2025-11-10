@@ -1,6 +1,0 @@
-result_1到result_10对应从waymo数据集中取的10张不同图片的相关结果.
-每一个结果内有四个json文件：
-main_result.json是我们程序的调度结果；
-main_time.json是我们程序的运行结果；
-resizing_result.json是resizing文章的调度结果；
-resizing_time.json是resizing文章的运行结果。

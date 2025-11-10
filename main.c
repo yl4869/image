@@ -85,7 +85,7 @@ float proc_time_size[4][4] = {
 // 函数声明
 int compareByDeadline(const void* a, const void* b);
 int get_num_tasks(Task *tasks);
-int compress_batch(Batches *batches);
+int compress_batch(Batches *batches, float accumulated_time, float global_deadline, int *used_batches);
 void calculate_current_time(Batches *batches); 
 int findMinTargetSizeTask(TaskQueue *taskQueue);
 void transfer_batch_tasks(TaskQueue *source, Batch *destination);
@@ -140,7 +140,8 @@ void appendTaskToQueue(TaskQueue *taskQueue, Task *task) {
 }
 
 //计算batches的总时间（对有任务的批次时间求和）
-void calculate_current_time(Batches *batches)
+// 新增参数：include_fixed_overhead 控制是否包含固定开销
+void calculate_current_time_impl(Batches *batches, int include_fixed_overhead)
 {   batches->current_time = 0.0f; 
     int x;//任务数量
     for(int i=0;i<4;i++)
@@ -152,8 +153,41 @@ void calculate_current_time(Batches *batches)
         {
             x+=batches->batches[i].taskQueue[j].task_count;
         }
-        float b=proc_time_size[i][3];//阶段时间
+        // 只在第一轮或指定时包含固定开销
+        float b = include_fixed_overhead ? proc_time_size[i][3] : 0.0f;
         batches->current_time+=k*x+b;
+    }
+}
+
+void calculate_current_time(Batches *batches)
+{
+    calculate_current_time_impl(batches, 1);
+}
+
+// 计算时间：根据已使用批次决定是否包含固定开销
+void calculate_current_time_smart(Batches *batches, int *used_batches, float *fixed_overhead_added)
+{
+    batches->current_time = 0.0f;
+    *fixed_overhead_added = 0.0f;
+    int x; // 任务数量
+    
+    for(int i = 0; i < 4; i++) {
+        if(batches->batches[i].Queue_count == 0) continue;
+        
+        x = 0;
+        float k = trans_time_size[i]; // 传输时间系数
+        for(int j = 0; j < batches->batches[i].Queue_count; j++) {
+            x += batches->batches[i].taskQueue[j].task_count;
+        }
+        
+        // 只在该批次第一次使用时包含固定开销
+        float b = 0.0f;
+        if (!used_batches[i] && x > 0) {
+            b = proc_time_size[i][3]; // 第一次使用，加上固定开销
+            *fixed_overhead_added += b;
+        }
+        
+        batches->current_time += k * x + b;
     }
 }
 
@@ -182,25 +216,55 @@ void init_batches(Batches *batches,Task *tasks)//初始化批次集合
 }
 
 // 压缩批次操作，压缩超时的批次
-int compress_batch(Batches *batches) 
+// 持续压缩直到无法再压缩或时间满足deadline要求
+int compress_batch(Batches *batches, float accumulated_time, float global_deadline, int *used_batches) 
 {   
-    for(int i=3;i>=0;i--)//按尺寸从大到小遍历，因为是压缩到最小
-    {   
-        int original_count = batches->batches[i].Queue_count;
-        for(int j=0;j<original_count;j++)
-        {
-            if(batches->batches[i].taskQueue[j].task_count==0) continue;
-            //该批次内没有任务
-            int batche_index= findMinTargetSizeTask(&batches->batches[i].taskQueue[j]);//找到当前批次内任务能最小缩到哪个尺寸
-            if(batche_index==-1 || batche_index==i) continue;//不能再缩了或者缩到自己
-            transfer_batch_tasks(&batches->batches[i].taskQueue[j], &batches->batches[batche_index]);
-            batches->batches[i].taskQueue[j].tasks=NULL;
-            batches->batches[i].taskQueue[j].task_count=0;
-            calculate_current_time(batches);
-            if(batches->current_time < batches->deadline) return 1;//成功融合使得时间小于截止期
+    int compressed_any = 0; // 标记是否进行了任何压缩
+    float fixed_overhead_this_calc = 0.0f;
+    
+    // 持续压缩，直到无法再压缩
+    while (1) {
+        int compressed_this_round = 0; // 本轮是否压缩了
+        
+        // 从大到小遍历批次尺寸
+        for(int i=3;i>=0;i--)
+        {   
+            int original_count = batches->batches[i].Queue_count;
+            for(int j=0;j<original_count;j++)
+            {
+                if(batches->batches[i].taskQueue[j].task_count==0) continue;
+                
+                // 找到当前批次内任务能最小缩到哪个尺寸
+                int batche_index = findMinTargetSizeTask(&batches->batches[i].taskQueue[j]);
+                if(batche_index==-1 || batche_index==i) continue;//不能再缩了或者缩到自己
+                
+                // 执行压缩：将任务从批次i转移到批次batche_index
+                transfer_batch_tasks(&batches->batches[i].taskQueue[j], &batches->batches[batche_index]);
+                batches->batches[i].taskQueue[j].tasks=NULL;
+                batches->batches[i].taskQueue[j].task_count=0;
+                
+                // 使用与主循环一致的时间计算方式
+                calculate_current_time_smart(batches, used_batches, &fixed_overhead_this_calc);
+                
+                // 检查压缩后是否满足deadline
+                if((accumulated_time + batches->current_time) <= global_deadline) {
+                    return 1; // 成功压缩，时间满足要求
+                }
+                
+                compressed_this_round = 1; // 本轮进行了压缩
+                compressed_any = 1; // 标记进行了压缩
+            }
+        }
+        
+        // 如果本轮没有进行任何压缩，说明无法再压缩了
+        if (!compressed_this_round) {
+            break;
         }
     }
-    return -1;//未能成功融合
+    
+    // 如果进行了压缩但时间仍不满足，返回-1表示未能满足deadline
+    // 如果没有进行任何压缩，也返回-1
+    return compressed_any ? 0 : -1; // 0表示压缩了但未满足，-1表示无法压缩
 }
 
 int findMinTargetSizeTask(TaskQueue *taskQueue)//查找当前大小图片能最小缩到哪个大小
@@ -292,7 +356,7 @@ int get_num_tasks(Task *tasks)
     return count;
 }
 
-// 从文件读取任务（CSV格式：size,deadline,id,crucial）
+// 从文件读取任务（CSV格式：size,deadline,id,crucial,category）
 Task* read_tasks_from_file(const char *filename, int *task_count) {
     FILE *fp = fopen(filename, "r");
     if (!fp) {
@@ -340,13 +404,30 @@ Task* read_tasks_from_file(const char *filename, int *task_count) {
         int size, crucial;
         float deadline;
         char id[50];
+        char category[100];
         
-        // 解析CSV行：size,deadline,id,crucial
-        if (sscanf(line, "%d,%f,%49[^,],%d", &size, &deadline, id, &crucial) == 4) {
+        // 解析CSV行：size,deadline,id,crucial,category
+        int fields_read = sscanf(line, "%d,%f,%49[^,],%d,%99[^\n\r]", &size, &deadline, id, &crucial, category);
+        if (fields_read >= 4) {
             tasks[idx].size = size;
             tasks[idx].deadline = deadline;
-            strncpy(tasks[idx].id, id, sizeof(tasks[idx].id) - 1);
-            tasks[idx].id[sizeof(tasks[idx].id) - 1] = '\0';
+            
+            // 如果有category字段（fields_read == 5），将id和category拼接
+            if (fields_read == 5 && strlen(category) > 0) {
+                // 移除category末尾的空白字符
+                int cat_len = strlen(category);
+                while (cat_len > 0 && (category[cat_len-1] == '\n' || category[cat_len-1] == '\r' || category[cat_len-1] == ' ')) {
+                    category[cat_len-1] = '\0';
+                    cat_len--;
+                }
+                // 拼接id和category: "id_category"
+                snprintf(tasks[idx].id, sizeof(tasks[idx].id), "%s_%s", id, category);
+            } else {
+                // 没有category，直接使用id
+                strncpy(tasks[idx].id, id, sizeof(tasks[idx].id) - 1);
+                tasks[idx].id[sizeof(tasks[idx].id) - 1] = '\0';
+            }
+            
             tasks[idx].crucial = crucial;
             idx++;
         }
@@ -388,6 +469,16 @@ void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
     int num_tasks = get_num_tasks(tasks);
     int *processed = (int*)calloc(num_tasks, sizeof(int));
     float accumulated_time = 0.0f; // 跨轮累计时间（连续时间）
+    int used_batches[4] = {0, 0, 0, 0}; // 记录哪些批次尺寸已经使用过（已计入固定开销）
+    int is_first_round = 1; // 标记是否是第一轮
+
+    // 找到所有任务的最小deadline（全局deadline）
+    float global_deadline = FLT_MAX;
+    for (int i = 0; i < num_tasks; i++) {
+        if (tasks[i].deadline < global_deadline) {
+            global_deadline = tasks[i].deadline;
+        }
+    }
 
     // 开始JSON数组（整个运行期仅一次）
     fprintf(out, "[\n");
@@ -399,37 +490,63 @@ void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
 
         // 分配未处理任务到本轮批次
         int tasks_added_this_round = 0; // 记录本轮添加的任务数
+        int can_add_more = 1; // 标记是否还能继续添加任务
+        
         for (int i = 0; i < num_tasks; i++) {
             if (processed[i]) continue; // 跳过已处理
             Task *task = &tasks[i];
             if (task->size < 1 || task->size > 4) {
                 continue; // 防越界
             }
+            
             int target_batch_index;
             if (task->crucial == 0) {
                 target_batch_index = 0; // 非关键任务直接分配到64大小（索引0）
             } else {
                 target_batch_index = task->size - 1; // 关键任务按原大小分配
             }
+            
+            // 先添加任务
             appendTaskToQueue(&batches->batches[target_batch_index].taskQueue[0], task);
             tasks_added_this_round++;
-            if (task->deadline < batches->deadline) {
-                batches->deadline = task->deadline;
-            }
-            calculate_current_time(batches);//计算并更新一个当前批次集合的总时间
-            // 使用连续时间进行判断：accumulated_time + 本轮时间
-            if ((accumulated_time + batches->current_time) > batches->deadline) {
-                int result = compress_batch(batches);
-                if (result == -1) {
-                    // 无法再压缩，结束本轮装载，进入输出
-                    break;
-                }
-                // 压缩后时间可能变化，重新以连续时间判断
-                if ((accumulated_time + batches->current_time) > batches->deadline) {
-                    break;
+            
+            // 使用智能时间计算：只在第一次使用批次时计入固定开销
+            float fixed_overhead_this_calc = 0.0f;
+            calculate_current_time_smart(batches, used_batches, &fixed_overhead_this_calc);
+            
+            // 使用连续时间进行判断：accumulated_time + 本轮时间，使用全局deadline
+            if ((accumulated_time + batches->current_time) > global_deadline) {
+                // 尝试压缩批次以节省时间
+                int result = compress_batch(batches, accumulated_time, global_deadline, used_batches);
+                
+                if (result == 1) {
+                    // 压缩成功，时间满足deadline，可以继续添加任务
+                    // compress_batch内部已经重新计算了时间，batches->current_time已经更新
+                    continue; // 继续添加下一个任务
+                } else if (result == 0) {
+                    // 压缩了但时间仍不满足deadline，移除刚加入的任务
+                    batches->batches[target_batch_index].taskQueue[0].task_count--;
+                    tasks_added_this_round--;
+                    calculate_current_time_smart(batches, used_batches, &fixed_overhead_this_calc); // 重新计算时间
+                    can_add_more = 0;
+                    break; // 停止添加更多任务，但会输出已添加的任务
+                } else {
+                    // result == -1: 无法再压缩，移除刚加入的任务
+                    batches->batches[target_batch_index].taskQueue[0].task_count--;
+                    tasks_added_this_round--;
+                    calculate_current_time_smart(batches, used_batches, &fixed_overhead_this_calc); // 重新计算时间
+                    can_add_more = 0;
+                    break; // 停止添加更多任务，但会输出已添加的任务
                 }
             }
         }
+        
+        // 如果本轮一个任务都没加进去，说明剩余任务都无法完成
+        if (tasks_added_this_round == 0) {
+            printf("警告: 剩余任务无法在deadline内完成，停止调度\n");
+            break; // 退出 while(1) 循环
+        }
+        
         // 统计每个批次的关键任务数量，并创建批次索引数组
         typedef struct {
             int index;           // 批次索引
@@ -484,9 +601,25 @@ void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
         // 标记本轮输出的任务为已处理
         mark_processed_tasks(batches, tasks, num_tasks, processed);
 
+        // 标记本轮使用的批次（这些批次的固定开销已经计入）
+        for (int i = 0; i < 4; i++) {
+            int has_tasks_in_batch = 0;
+            for (int j = 0; j < batches->batches[i].Queue_count; j++) {
+                if (batches->batches[i].taskQueue[j].task_count > 0) {
+                    has_tasks_in_batch = 1;
+                    break;
+                }
+            }
+            if (has_tasks_in_batch) {
+                used_batches[i] = 1; // 标记该批次已使用过
+            }
+        }
+
         // 本轮时间计入累计时间，下一轮判断基于连续时间
         // 这里 batches->current_time 为本轮估计的用时
         accumulated_time += batches->current_time;
+        
+        is_first_round = 0; // 第一轮结束
 
         // 判断是否全部处理完成
         int done = 1;
@@ -497,11 +630,6 @@ void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
             }
         }
         
-        // 如果本轮没有添加任何任务，但还有未处理任务，退出循环
-        if (!done && tasks_added_this_round == 0) {
-            break;
-        }
-        
         if (done) break;
 
         // 未完成则进入下一轮，重新初始化 batches 并继续
@@ -510,7 +638,7 @@ void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
     if (!first_batch) {
         fprintf(out, ",\n");
     }
-    fprintf(out, "  {\"deadline\": %.6f}", batches->deadline);
+    fprintf(out, "  {\"deadline\": %.6f}", global_deadline);
     // 结束JSON数组
     fprintf(out, "\n]\n");
     // 统计和输出未处理的任务信息
@@ -543,6 +671,43 @@ void dynamicScheduling(Batches *batches, Task *tasks, FILE *out)
                        tasks[i].crucial ? "关键" : "非关键");
             }
         }
+        
+        // 将错失任务输出到 JSON 文件
+        FILE *missed_file = NULL;
+        if (fopen_s(&missed_file, "missed_tasks.json", "w") == 0 && missed_file) {
+            fprintf(missed_file, "{\n");
+            fprintf(missed_file, "  \"total_tasks\": %d,\n", num_tasks);
+            fprintf(missed_file, "  \"completed_tasks\": %d,\n", num_tasks - unprocessed_count);
+            fprintf(missed_file, "  \"missed_tasks\": %d,\n", unprocessed_count);
+            fprintf(missed_file, "  \"missed_crucial\": %d,\n", crucial_missed);
+            fprintf(missed_file, "  \"missed_non_crucial\": %d,\n", non_crucial_missed);
+            fprintf(missed_file, "  \"deadline\": %.6f,\n", global_deadline);
+            fprintf(missed_file, "  \"accumulated_time\": %.6f,\n", accumulated_time);
+            fprintf(missed_file, "  \"missed_task_details\": [\n");
+            
+            int first_task = 1;
+            for (int i = 0; i < num_tasks; i++) {
+                if (!processed[i]) {
+                    if (!first_task) {
+                        fprintf(missed_file, ",\n");
+                    }
+                    fprintf(missed_file, "    {\n");
+                    fprintf(missed_file, "      \"id\": \"%s\",\n", tasks[i].id);
+                    fprintf(missed_file, "      \"size\": %d,\n", tasks[i].size);
+                    fprintf(missed_file, "      \"deadline\": %.6f,\n", tasks[i].deadline);
+                    fprintf(missed_file, "      \"crucial\": %d\n", tasks[i].crucial);
+                    fprintf(missed_file, "    }");
+                    first_task = 0;
+                }
+            }
+            
+            fprintf(missed_file, "\n  ]\n");
+            fprintf(missed_file, "}\n");
+            fclose(missed_file);
+            printf("\n错失任务详情已保存到: missed_tasks.json\n");
+        } else {
+            printf("\n警告: 无法创建 missed_tasks.json 文件\n");
+        }
     } 
     free(processed);
 }
@@ -557,12 +722,6 @@ int main(int argc, char *argv[]) {
     Task *tasks = read_tasks_from_file(task_file, &task_count);
     sortTasksByDeadline(tasks);
     FILE *out = NULL;
-    if (fopen_s(&out, "output.json", "w") != 0 || !out) {
-        printf("错误: 无法打开输出文件 output.json\n");
-        free(tasks);
-        return 1;
-    }
-    // 初始化批次集合
     Batches batches;
     dynamicScheduling(&batches, tasks, out);
     fclose(out);

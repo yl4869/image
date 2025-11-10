@@ -153,7 +153,6 @@ float schedule_with_smax(Task *tasks, int task_count, int s_max_idx, float H, in
         }
     }
     
-    // 保存最佳分配
     memcpy(best_assignment, assignment, task_count * sizeof(int));
     
     free(assignment);
@@ -256,7 +255,7 @@ void output_json(Task *tasks, int task_count, float deadline, int task_dropped) 
     fclose(fp);
 }
 
-// 从文件读取任务（CSV格式：size,orig_size,deadline,id,crucial）
+// 从文件读取任务（CSV格式：size,deadline,id,crucial,category）
 // 注意：resizing.c中size和orig_size都使用索引（0=64, 1=128, 2=256, 3=512）
 Task* read_tasks_from_file(const char *filename, int *task_count) {
     FILE *fp = fopen(filename, "r");
@@ -291,7 +290,6 @@ Task* read_tasks_from_file(const char *filename, int *task_count) {
     // 重置文件指针
     rewind(fp);
     
-    // 再次跳过标题行（如果有）
     if (fgets(line, sizeof(line), fp)) {
         if (!(strstr(line, "size") && strstr(line, "deadline"))) {
             // 不是标题行，重置回文件开头
@@ -304,9 +302,12 @@ Task* read_tasks_from_file(const char *filename, int *task_count) {
     while (fgets(line, sizeof(line), fp) && idx < count) {
         int size_val, crucial;
         float deadline;
-        char id[50];    
-        // 解析CSV行
-        if (sscanf(line, "%d,%f,%49[^,],%d", &size_val, &deadline, id, &crucial) == 4) {
+        char id[50];
+        char category[100];
+    
+        // 解析CSV行：size,deadline,id,crucial,category
+        int fields_read = sscanf(line, "%d,%f,%49[^,],%d,%99[^\n\r]", &size_val, &deadline, id, &crucial, category);
+        if (fields_read >= 4) {
             // size_val是索引（1-4），转换为0-3
             int size_idx = size_val - 1;
             if (size_idx < 0 || size_idx > 3) {
@@ -315,8 +316,23 @@ Task* read_tasks_from_file(const char *filename, int *task_count) {
             tasks[idx].size = size_idx;
             tasks[idx].orig_size = size_idx;  // 原始大小和当前大小相同
             tasks[idx].deadline = deadline;
-            strncpy(tasks[idx].id, id, sizeof(tasks[idx].id) - 1);
-            tasks[idx].id[sizeof(tasks[idx].id) - 1] = '\0';
+            
+            // 如果有category字段（fields_read == 5），将id和category拼接
+            if (fields_read == 5 && strlen(category) > 0) {
+                // 移除category末尾的空白字符
+                int cat_len = strlen(category);
+                while (cat_len > 0 && (category[cat_len-1] == '\n' || category[cat_len-1] == '\r' || category[cat_len-1] == ' ')) {
+                    category[cat_len-1] = '\0';
+                    cat_len--;
+                }
+                // 拼接id和category: "id_category"
+                snprintf(tasks[idx].id, sizeof(tasks[idx].id), "%s_%s", id, category);
+            } else {
+                // 没有category，直接使用id
+                strncpy(tasks[idx].id, id, sizeof(tasks[idx].id) - 1);
+                tasks[idx].id[sizeof(tasks[idx].id) - 1] = '\0';
+            }
+            
             tasks[idx].crucial = crucial;
             tasks[idx].assigned_size = size_idx;  // 初始分配大小
             idx++;
@@ -356,5 +372,5 @@ int main(int argc, char *argv[]) {
     // 释放内存
     free(tasks);
     
-    return schedule_success ? 0 : 1;
+    return 0;
 }
