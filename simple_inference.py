@@ -71,6 +71,7 @@ class SimpleInference:
             return None, valid_ids, missing_ids
         return torch.stack(images).to(self.device), valid_ids, missing_ids
 
+    # TODO：这个函数的功能是什么
     def predict_batch(self, input_tensor, size):
         with torch.inference_mode():
             outputs = self.models[size](input_tensor)
@@ -80,6 +81,7 @@ class SimpleInference:
         pred_names = [self.class_mapping.get(pid, f"Unknown_Class_{pid}") for pid in pred_ids]
         return pred_ids, pred_names
 
+    # 输入向量->模型输出得分->转化为概率->旋转最大概率的物品类别与大小进行输出
     def predict_single_image(self, image_id, size):
         if size not in self.models:
             return {
@@ -134,6 +136,7 @@ class SimpleInference:
                 'error': str(e)
             }
 
+    # 从一个 JSON 文件中读取一批图像的处理任务
     def process_json_file(self, json_file_path):
         try:
             with open(json_file_path, 'r', encoding='utf-8') as f:
