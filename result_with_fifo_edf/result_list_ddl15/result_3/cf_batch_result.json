@@ -1,0 +1,20 @@
+[
+  {
+    "size": 256,
+    "images": [
+      {"id": "256_0_car", "crucial": 1}
+    ]
+  },
+  {
+    "size": 128,
+    "images": [
+      {"id": "128_0_car", "crucial": 1},
+      {"id": "128_0_person", "crucial": 1},
+      {"id": "128_1_person", "crucial": 1},
+      {"id": "128_2_car", "crucial": 1},
+      {"id": "128_2_person", "crucial": 1},
+      {"id": "128_3_car", "crucial": 0}
+    ]
+  },
+  {"deadline": 15.000000}
+]

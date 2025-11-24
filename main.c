@@ -721,7 +721,12 @@ int main(int argc, char *argv[]) {
     int task_count = 0;
     Task *tasks = read_tasks_from_file(task_file, &task_count);
     sortTasksByDeadline(tasks);
-    FILE *out = NULL;
+    FILE *out = fopen("output.json", "w");
+    if (!out) {
+        perror("无法创建 output.json");
+        free(tasks);
+        return 1;
+    }
     Batches batches;
     dynamicScheduling(&batches, tasks, out);
     fclose(out);

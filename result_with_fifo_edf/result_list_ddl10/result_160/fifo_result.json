@@ -1,0 +1,21 @@
+[
+  {
+    "size": 64,
+    "images": [
+      {"id": "64_0_car", "crucial": 0}
+    ]
+  },
+  {
+    "size": 64,
+    "images": [
+      {"id": "64_1_car", "crucial": 0}
+    ]
+  },
+  {
+    "size": 64,
+    "images": [
+      {"id": "64_10_car", "crucial": 0}
+    ]
+  },
+  {"deadline": 10.000000}
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "size": 64,
+    "images": [
+      {"id": "64_13_car", "crucial": 1},
+      {"id": "64_11_car", "crucial": 0},
+      {"id": "128_8_car", "crucial": 1}
+    ]
+  },
+  {
+    "size": 128,
+    "images": [
+      {"id": "256_3_car", "crucial": 1},
+      {"id": "256_2_car", "crucial": 1}
+    ]
+  },
+  {"deadline": 10.000000}
+]

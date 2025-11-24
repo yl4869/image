@@ -1,0 +1,52 @@
+[
+  {
+    "image_id": "128_0_car",
+    "size": 128,
+    "predicted_class": "motorcycle",
+    "predicted_class_id": 3,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_1_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_2_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 128,
+      "image_count": 3,
+      "batch_processing_time_ms": 5.06,
+      "cumulative_time_ms": 5.06
+    }
+  },
+  {
+    "image_id": "512_0_car",
+    "size": 512,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 512,
+      "image_count": 1,
+      "batch_processing_time_ms": 6.95,
+      "cumulative_time_ms": 12.02
+    }
+  },
+  {
+    "deadline": 15.0,
+    "missed_deadline_images": []
+  }
+]

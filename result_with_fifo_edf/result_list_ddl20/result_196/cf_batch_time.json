@@ -1,0 +1,73 @@
+[
+  {
+    "image_id": "256_0_car",
+    "size": 256,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "256_1_car",
+    "size": 256,
+    "predicted_class": "person",
+    "predicted_class_id": 4,
+    "crucial": 1
+  },
+  {
+    "image_id": "256_2_car",
+    "size": 256,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 256,
+      "image_count": 3,
+      "batch_processing_time_ms": 7.32,
+      "cumulative_time_ms": 7.32
+    }
+  },
+  {
+    "image_id": "128_3_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_1_car",
+    "size": 128,
+    "predicted_class": "bench",
+    "predicted_class_id": 0,
+    "crucial": 0
+  },
+  {
+    "image_id": "128_2_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "image_id": "128_0_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 128,
+      "image_count": 4,
+      "batch_processing_time_ms": 6.87,
+      "cumulative_time_ms": 14.18
+    }
+  },
+  {
+    "deadline": 20.0,
+    "missed_deadline_images": []
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "total_tasks": 11,
+  "completed_tasks": 6,
+  "missed_tasks": 5,
+  "missed_crucial": 1,
+  "missed_non_crucial": 4,
+  "deadline": 15.000000,
+  "accumulated_time": 14.400000,
+  "missed_task_details": [
+    {
+      "id": "64_0_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_0_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_1_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_2_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "128_0_car",
+      "size": 2,
+      "deadline": 15.000000,
+      "crucial": 0
+    }
+  ]
+}

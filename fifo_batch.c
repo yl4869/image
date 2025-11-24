@@ -135,34 +135,31 @@ int main(int argc, char *argv[]) {
             batch_end++;
         }
 
-        // 统计该批次能完成的任务（FIFO：按顺序尝试每个任务）
-        int any_completed_in_batch = 0;
-        int first_in_batch = 1;
-        for (int j = batch_start; j <= batch_end; j++) {
-            float task_time = trans_time_size[sz_idx] + proc_time_size_1d[sz_idx];
-            if (accumulated_time + task_time <= global_deadline) {
-                // 完成
-                if (!first_obj && first_in_batch) fprintf(out, ",\n"); // 如果非首对象并本批次是首条，先写逗号换行
-                if (first_in_batch) {
-                    fprintf(out, "  {\n    \"size\": %d,\n    \"images\": [\n", size_values[sz_idx]);
-                }
-                if (!first_in_batch) fprintf(out, ",\n");
+        // 计算批次时间：trans_time_size * n + proc_time_size_1d（n是批次内任务数量）
+        int batch_size = batch_end - batch_start + 1;
+        float batch_time = trans_time_size[sz_idx] * batch_size + proc_time_size_1d[sz_idx];
+
+        // 判断整个批次是否能完成
+        if (accumulated_time + batch_time <= global_deadline) {
+            // 整个批次都能完成
+            if (!first_obj) fprintf(out, ",\n");
+            fprintf(out, "  {\n    \"size\": %d,\n    \"images\": [\n", size_values[sz_idx]);
+            
+            for (int j = batch_start; j <= batch_end; j++) {
+                if (j > batch_start) fprintf(out, ",\n");
                 fprintf(out, "      {\"id\": \"%s\", \"crucial\": %d}", tasks[j].id, tasks[j].crucial);
-                first_in_batch = 0;
-                any_completed_in_batch = 1;
-                accumulated_time += task_time;
                 completed_count++;
-            } else {
-                // 错过截止
+            }
+            
+            fprintf(out, "\n    ]\n  }");
+            first_obj = 0;
+            accumulated_time += batch_time;
+        } else {
+            // 整个批次都错过截止
+            for (int j = batch_start; j <= batch_end; j++) {
                 missed_count++;
                 if (tasks[j].crucial) missed_crucial++; else missed_non_crucial++;
             }
-        }
-
-        if (any_completed_in_batch) {
-            // 结束本批次的 images 数组和对象
-            fprintf(out, "\n    ]\n  }");
-            first_obj = 0;
         }
 
         idx = batch_end + 1; // 移动到下一个批次起点
@@ -189,23 +186,43 @@ int main(int argc, char *argv[]) {
             fprintf(mf, "  \"missed_task_details\": [\n");
 
             int first_t = 1;
-            // 重新遍历以输出错失详情（按照输入顺序）
+            // 重新遍历以输出错失详情（按照输入顺序，使用批次时间计算）
             float tmp_acc = 0.0f;
-            for (int i = 0; i < task_count; i++) {
-                int sidx = tasks[i].size - 1; if (sidx < 0) sidx = 0; if (sidx > 3) sidx = 3;
-                float ttime = trans_time_size[sidx] + proc_time_size_1d[sidx];
-                if (tmp_acc + ttime <= global_deadline) {
-                    tmp_acc += ttime;
-                    continue; // 已完成
+            int tmp_idx = 0;
+            while (tmp_idx < task_count) {
+                int tmp_size = tasks[tmp_idx].size;
+                int tmp_sz_idx = tmp_size - 1; if (tmp_sz_idx < 0) tmp_sz_idx = 0; if (tmp_sz_idx > 3) tmp_sz_idx = 3;
+                
+                // 计算批次范围
+                int tmp_batch_start = tmp_idx;
+                int tmp_batch_end = tmp_idx;
+                while (tmp_batch_end + 1 < task_count && tasks[tmp_batch_end + 1].size == tmp_size) {
+                    tmp_batch_end++;
                 }
-                if (!first_t) fprintf(mf, ",\n");
-                fprintf(mf, "    {\n");
-                fprintf(mf, "      \"id\": \"%s\",\n", tasks[i].id);
-                fprintf(mf, "      \"size\": %d,\n", tasks[i].size);
-                fprintf(mf, "      \"deadline\": %.6f,\n", tasks[i].deadline);
-                fprintf(mf, "      \"crucial\": %d\n", tasks[i].crucial);
-                fprintf(mf, "    }");
-                first_t = 0;
+                
+                // 计算批次时间
+                int tmp_batch_size = tmp_batch_end - tmp_batch_start + 1;
+                float tmp_batch_time = trans_time_size[tmp_sz_idx] * tmp_batch_size + proc_time_size_1d[tmp_sz_idx];
+                
+                if (tmp_acc + tmp_batch_time <= global_deadline) {
+                    tmp_acc += tmp_batch_time;
+                    tmp_idx = tmp_batch_end + 1;
+                    continue; // 整个批次已完成
+                }
+                
+                // 整个批次都错过，输出所有任务
+                for (int k = tmp_batch_start; k <= tmp_batch_end; k++) {
+                    if (!first_t) fprintf(mf, ",\n");
+                    fprintf(mf, "    {\n");
+                    fprintf(mf, "      \"id\": \"%s\",\n", tasks[k].id);
+                    fprintf(mf, "      \"size\": %d,\n", tasks[k].size);
+                    fprintf(mf, "      \"deadline\": %.6f,\n", tasks[k].deadline);
+                    fprintf(mf, "      \"crucial\": %d\n", tasks[k].crucial);
+                    fprintf(mf, "    }");
+                    first_t = 0;
+                }
+                
+                tmp_idx = tmp_batch_end + 1;
             }
 
             fprintf(mf, "\n  ]\n}");

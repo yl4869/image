@@ -1,0 +1,25 @@
+[
+  {
+    "size": 128,
+    "images": [
+      {"id": "128_0_car", "crucial": 1},
+      {"id": "128_1_car", "crucial": 1},
+      {"id": "128_3_car", "crucial": 1},
+      {"id": "128_6_car", "crucial": 1},
+      {"id": "128_7_car", "crucial": 1},
+      {"id": "128_8_car", "crucial": 1},
+      {"id": "128_11_car", "crucial": 0},
+      {"id": "128_2_car", "crucial": 0},
+      {"id": "128_4_car", "crucial": 0},
+      {"id": "128_5_car", "crucial": 0},
+      {"id": "128_9_car", "crucial": 0}
+    ]
+  },
+  {
+    "size": 256,
+    "images": [
+      {"id": "256_0_car", "crucial": 1}
+    ]
+  },
+  {"deadline": 20.000000}
+]

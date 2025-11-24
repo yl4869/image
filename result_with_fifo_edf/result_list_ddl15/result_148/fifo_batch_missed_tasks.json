@@ -1,0 +1,137 @@
+{
+  "total_tasks": 22,
+  "completed_tasks": 1,
+  "missed_tasks": 21,
+  "missed_crucial": 7,
+  "missed_non_crucial": 14,
+  "deadline": 15.000000,
+  "accumulated_time": 4.500000,
+  "missed_task_details": [
+    {
+      "id": "64_0_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_0_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_1_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_1_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_10_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "64_2_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_2_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "64_3_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_3_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "64_4_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_4_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_5_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_5_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "64_6_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_6_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "64_7_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_7_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "64_8_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_8_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_9_car",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 1
+    },
+    {
+      "id": "64_9_person",
+      "size": 1,
+      "deadline": 15.000000,
+      "crucial": 0
+    }
+  ]
+}

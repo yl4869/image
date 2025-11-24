@@ -1,0 +1,52 @@
+[
+  {
+    "image_id": "128_0_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_1_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 128,
+      "image_count": 2,
+      "batch_processing_time_ms": 4.0,
+      "cumulative_time_ms": 4.0
+    }
+  },
+  {
+    "image_id": "256_0_car",
+    "size": 256,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "256_1_car",
+    "size": 256,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 256,
+      "image_count": 2,
+      "batch_processing_time_ms": 5.53,
+      "cumulative_time_ms": 9.53
+    }
+  },
+  {
+    "deadline": 15.0,
+    "missed_deadline_images": []
+  }
+]

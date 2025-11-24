@@ -1,0 +1,119 @@
+[
+  {
+    "image_id": "128_8_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_7_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_5_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_4_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_3_car",
+    "size": 64,
+    "predicted_class": "bench",
+    "predicted_class_id": 0,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_10_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 64,
+      "image_count": 6,
+      "batch_processing_time_ms": 4.99,
+      "cumulative_time_ms": 4.99
+    }
+  },
+  {
+    "image_id": "512_0_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 128,
+      "image_count": 1,
+      "batch_processing_time_ms": 4.23,
+      "cumulative_time_ms": 9.22
+    }
+  },
+  {
+    "image_id": "64_9_car",
+    "size": 64,
+    "predicted_class": "person",
+    "predicted_class_id": 4,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_1_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_0_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 3,
+      "size": 64,
+      "image_count": 3,
+      "batch_processing_time_ms": 3.5,
+      "cumulative_time_ms": 12.72
+    }
+  },
+  {
+    "image_id": "256_1_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 4,
+      "size": 128,
+      "image_count": 1,
+      "batch_processing_time_ms": 3.29,
+      "cumulative_time_ms": 16.01
+    }
+  },
+  {
+    "deadline": 10.0,
+    "missed_deadline_images": []
+  }
+]

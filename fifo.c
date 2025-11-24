@@ -126,18 +126,20 @@ int main(int argc, char *argv[]) {
     int missed_crucial = 0;
     int missed_non_crucial = 0;
 
-    int first = 1;
+    int first_obj = 1;
+
     for (int i = 0; i < task_count; i++) {
         int sz_idx = tasks[i].size - 1; // 0-based
         if (sz_idx < 0) sz_idx = 0; if (sz_idx > 3) sz_idx = 3;
         float task_time = trans_time_size[sz_idx] + proc_time_size_1d[sz_idx];
 
         if (accumulated_time + task_time <= global_deadline) {
-            // 完成该任务
-            if (!first) fprintf(out, ",\n");
-            fprintf(out, "  {\"id\": \"%s\", \"size\": %d, \"crucial\": %d}",
-                    tasks[i].id, size_values[sz_idx], tasks[i].crucial);
-            first = 0;
+            // 完成该任务 - 每个任务单独作为一个批次对象
+            if (!first_obj) fprintf(out, ",\n");
+            fprintf(out, "  {\n    \"size\": %d,\n    \"images\": [\n", size_values[sz_idx]);
+            fprintf(out, "      {\"id\": \"%s\", \"crucial\": %d}\n", tasks[i].id, tasks[i].crucial);
+            fprintf(out, "    ]\n  }");
+            first_obj = 0;
             accumulated_time += task_time;
             completed_count++;
         } else {
@@ -148,7 +150,7 @@ int main(int argc, char *argv[]) {
     }
 
     // 写入 deadline 为最后一项（与其他算法输出一致）
-    if (!first) fprintf(out, ",\n");
+    if (!first_obj) fprintf(out, ",\n");
     fprintf(out, "  {\"deadline\": %.6f}\n", global_deadline);
     fprintf(out, "]\n");
     fclose(out);

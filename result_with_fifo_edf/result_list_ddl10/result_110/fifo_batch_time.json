@@ -1,0 +1,36 @@
+[
+  {
+    "image_id": "128_0_car",
+    "size": 128,
+    "predicted_class": "bench",
+    "predicted_class_id": 0,
+    "crucial": 0
+  },
+  {
+    "image_id": "128_1_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "image_id": "128_2_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 128,
+      "image_count": 3,
+      "batch_processing_time_ms": 5.6,
+      "cumulative_time_ms": 5.6
+    }
+  },
+  {
+    "deadline": 10.0,
+    "missed_deadline_images": []
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "total_tasks": 14,
+  "completed_tasks": 13,
+  "missed_tasks": 1,
+  "missed_crucial": 0,
+  "missed_non_crucial": 1,
+  "deadline": 20.000000,
+  "accumulated_time": 16.000000,
+  "missed_task_details": [
+    {
+      "id": "256_0_car",
+      "size": 3,
+      "deadline": 20.000000,
+      "crucial": 0
+    }
+  ]
+}

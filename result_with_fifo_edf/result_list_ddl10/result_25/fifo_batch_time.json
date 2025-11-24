@@ -1,0 +1,22 @@
+[
+  {
+    "image_id": "256_0_car",
+    "size": 256,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 256,
+      "image_count": 1,
+      "batch_processing_time_ms": 4.19,
+      "cumulative_time_ms": 4.19
+    }
+  },
+  {
+    "deadline": 10.0,
+    "missed_deadline_images": []
+  }
+]

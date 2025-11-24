@@ -1,0 +1,25 @@
+[
+  {
+    "size": 64,
+    "images": [
+      {"id": "64_6_car", "crucial": 1},
+      {"id": "64_18_car", "crucial": 1},
+      {"id": "64_15_car", "crucial": 1},
+      {"id": "64_14_car", "crucial": 0},
+      {"id": "64_13_car", "crucial": 0},
+      {"id": "64_16_car", "crucial": 0},
+      {"id": "64_17_car", "crucial": 0},
+      {"id": "64_12_car", "crucial": 0},
+      {"id": "64_2_car", "crucial": 0},
+      {"id": "128_1_car", "crucial": 1},
+      {"id": "128_5_car", "crucial": 1}
+    ]
+  },
+  {
+    "size": 128,
+    "images": [
+      {"id": "256_0_car", "crucial": 1}
+    ]
+  },
+  {"deadline": 15.000000}
+]

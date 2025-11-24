@@ -1,0 +1,29 @@
+[
+  {
+    "image_id": "128_0_person",
+    "size": 128,
+    "predicted_class": "person",
+    "predicted_class_id": 4,
+    "crucial": 0
+  },
+  {
+    "image_id": "128_1_person",
+    "size": 128,
+    "predicted_class": "bench",
+    "predicted_class_id": 0,
+    "crucial": 0
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 128,
+      "image_count": 2,
+      "batch_processing_time_ms": 4.98,
+      "cumulative_time_ms": 4.98
+    }
+  },
+  {
+    "deadline": 15.0,
+    "missed_deadline_images": []
+  }
+]

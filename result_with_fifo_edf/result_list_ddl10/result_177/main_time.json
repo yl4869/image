@@ -1,0 +1,66 @@
+[
+  {
+    "image_id": "64_8_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "64_10_car",
+    "size": 64,
+    "predicted_class": "motorcycle",
+    "predicted_class_id": 3,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_6_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_5_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 64,
+      "image_count": 4,
+      "batch_processing_time_ms": 3.91,
+      "cumulative_time_ms": 3.91
+    }
+  },
+  {
+    "image_id": "256_1_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "256_0_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 128,
+      "image_count": 2,
+      "batch_processing_time_ms": 4.3,
+      "cumulative_time_ms": 8.2
+    }
+  },
+  {
+    "deadline": 10.0,
+    "missed_deadline_images": []
+  }
+]

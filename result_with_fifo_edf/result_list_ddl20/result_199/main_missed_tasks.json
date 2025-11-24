@@ -1,0 +1,113 @@
+{
+  "total_tasks": 34,
+  "completed_tasks": 17,
+  "missed_tasks": 17,
+  "missed_crucial": 0,
+  "missed_non_crucial": 17,
+  "deadline": 20.000000,
+  "accumulated_time": 19.500000,
+  "missed_task_details": [
+    {
+      "id": "64_24_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_18_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_4_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_5_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_6_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_7_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_16_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_9_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "128_0_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "128_1_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_14_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_13_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_12_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_11_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_10_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_23_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "64_0_car",
+      "size": 1,
+      "deadline": 20.000000,
+      "crucial": 0
+    }
+  ]
+}

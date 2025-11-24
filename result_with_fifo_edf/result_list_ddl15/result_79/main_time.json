@@ -1,0 +1,108 @@
+[
+  {
+    "image_id": "64_6_car",
+    "size": 64,
+    "predicted_class": "bicycle",
+    "predicted_class_id": 1,
+    "crucial": 1
+  },
+  {
+    "image_id": "64_18_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "64_15_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "64_14_car",
+    "size": 64,
+    "predicted_class": "bench",
+    "predicted_class_id": 0,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_13_car",
+    "size": 64,
+    "predicted_class": "bicycle",
+    "predicted_class_id": 1,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_16_car",
+    "size": 64,
+    "predicted_class": "bench",
+    "predicted_class_id": 0,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_17_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_12_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_2_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "image_id": "128_1_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_5_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 64,
+      "image_count": 11,
+      "batch_processing_time_ms": 7.04,
+      "cumulative_time_ms": 7.04
+    }
+  },
+  {
+    "image_id": "256_0_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 128,
+      "image_count": 1,
+      "batch_processing_time_ms": 3.29,
+      "cumulative_time_ms": 10.33
+    }
+  },
+  {
+    "deadline": 15.0,
+    "missed_deadline_images": []
+  }
+]

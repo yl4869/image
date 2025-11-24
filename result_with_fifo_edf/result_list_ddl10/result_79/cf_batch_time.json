@@ -1,0 +1,59 @@
+[
+  {
+    "image_id": "128_1_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_5_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 128,
+      "image_count": 2,
+      "batch_processing_time_ms": 4.05,
+      "cumulative_time_ms": 4.05
+    }
+  },
+  {
+    "image_id": "64_15_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "64_18_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "64_6_car",
+    "size": 64,
+    "predicted_class": "bicycle",
+    "predicted_class_id": 1,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 64,
+      "image_count": 3,
+      "batch_processing_time_ms": 3.61,
+      "cumulative_time_ms": 7.66
+    }
+  },
+  {
+    "deadline": 10.0,
+    "missed_deadline_images": []
+  }
+]

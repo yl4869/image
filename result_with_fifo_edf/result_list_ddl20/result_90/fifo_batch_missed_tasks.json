@@ -1,0 +1,23 @@
+{
+  "total_tasks": 19,
+  "completed_tasks": 17,
+  "missed_tasks": 2,
+  "missed_crucial": 2,
+  "missed_non_crucial": 0,
+  "deadline": 20.000000,
+  "accumulated_time": 19.500000,
+  "missed_task_details": [
+    {
+      "id": "256_0_person",
+      "size": 3,
+      "deadline": 20.000000,
+      "crucial": 1
+    },
+    {
+      "id": "256_1_person",
+      "size": 3,
+      "deadline": 20.000000,
+      "crucial": 1
+    }
+  ]
+}

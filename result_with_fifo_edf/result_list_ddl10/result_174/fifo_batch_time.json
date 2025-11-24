@@ -1,0 +1,50 @@
+[
+  {
+    "image_id": "64_0_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_0_person",
+    "size": 64,
+    "predicted_class": "traffic light",
+    "predicted_class_id": 5,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_1_car",
+    "size": 64,
+    "predicted_class": "motorcycle",
+    "predicted_class_id": 3,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_1_person",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "image_id": "64_2_car",
+    "size": 64,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 64,
+      "image_count": 5,
+      "batch_processing_time_ms": 4.42,
+      "cumulative_time_ms": 4.42
+    }
+  },
+  {
+    "deadline": 10.0,
+    "missed_deadline_images": []
+  }
+]

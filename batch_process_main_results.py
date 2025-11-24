@@ -117,13 +117,9 @@ def main():
 
     # 要处理的文件夹列表
     folders_to_process = [
-        'result_list_ddl20',
-        'result_list_ddl25',
-        'result_list_ddl30',
-        'result_list_ddl35',
-        'result_list_ddl40',
-        'result_list_ddl45',
-        'result_list_ddl50',
+        'result_with_fifo_edf/result_list_ddl10',
+        'result_with_fifo_edf/result_list_ddl15',
+
     ]
     
     # 是否跳过已存在的 main_time.json 文件（True=跳过，False=覆盖）
@@ -134,10 +130,10 @@ def main():
     
     # 模型路径配置
     model_paths = {
-        64: 'model/model_64.pth',
-        128: 'model/model_128.pth',
-        256: 'model/model_256.pth',
-        512: 'model/model_512.pth'
+        64: 'back/model/model_64.pth',
+        128: 'back/model/model_128.pth',
+        256: 'back/model/model_256.pth',
+        512: 'back/model/model_512.pth'
     }
     
     # 检查模型文件是否存在

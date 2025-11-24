@@ -1,0 +1,45 @@
+[
+  {
+    "image_id": "256_0_car",
+    "size": 256,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "256_1_car",
+    "size": 256,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 256,
+      "image_count": 2,
+      "batch_processing_time_ms": 5.79,
+      "cumulative_time_ms": 5.79
+    }
+  },
+  {
+    "image_id": "512_0_car",
+    "size": 512,
+    "predicted_class": "train",
+    "predicted_class_id": 6,
+    "crucial": 1
+  },
+  {
+    "batch_info": {
+      "batch_index": 2,
+      "size": 512,
+      "image_count": 1,
+      "batch_processing_time_ms": 6.97,
+      "cumulative_time_ms": 12.76
+    }
+  },
+  {
+    "deadline": 15.0,
+    "missed_deadline_images": []
+  }
+]

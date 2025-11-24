@@ -1,0 +1,65 @@
+{
+  "total_tasks": 24,
+  "completed_tasks": 15,
+  "missed_tasks": 9,
+  "missed_crucial": 5,
+  "missed_non_crucial": 4,
+  "deadline": 20.000000,
+  "accumulated_time": 13.500000,
+  "missed_task_details": [
+    {
+      "id": "128_0_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 1
+    },
+    {
+      "id": "128_1_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 1
+    },
+    {
+      "id": "128_2_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "128_3_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "128_4_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 0
+    },
+    {
+      "id": "128_5_car",
+      "size": 2,
+      "deadline": 20.000000,
+      "crucial": 1
+    },
+    {
+      "id": "256_0_person",
+      "size": 3,
+      "deadline": 20.000000,
+      "crucial": 1
+    },
+    {
+      "id": "256_1_person",
+      "size": 3,
+      "deadline": 20.000000,
+      "crucial": 1
+    },
+    {
+      "id": "256_2_person",
+      "size": 3,
+      "deadline": 20.000000,
+      "crucial": 0
+    }
+  ]
+}

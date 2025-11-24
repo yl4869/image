@@ -1,0 +1,36 @@
+[
+  {
+    "image_id": "128_1_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 1
+  },
+  {
+    "image_id": "128_0_person",
+    "size": 128,
+    "predicted_class": "person",
+    "predicted_class_id": 4,
+    "crucial": 0
+  },
+  {
+    "image_id": "128_0_car",
+    "size": 128,
+    "predicted_class": "car",
+    "predicted_class_id": 2,
+    "crucial": 0
+  },
+  {
+    "batch_info": {
+      "batch_index": 1,
+      "size": 128,
+      "image_count": 3,
+      "batch_processing_time_ms": 5.26,
+      "cumulative_time_ms": 5.26
+    }
+  },
+  {
+    "deadline": 10.0,
+    "missed_deadline_images": []
+  }
+]
