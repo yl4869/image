@@ -13,11 +13,11 @@ x_ticks = x_values.copy()
 # 定义多条曲线数据（示例），键为图例标签
 # 请将数组替换为真实的吞吐量数据（单位建议为 images/s），长度需与 x_values 相同
 raw_series_data = {
-	r"A$^2$R$^2$-Batch":      [423,1205,1952, 2399, 2568, 2642, 2671, 2677, 2677],
-	"RTS2022":  [155,859,1554, 2063, 2458, 2577, 2677, 2677, 2677],
-	"fifo_batch": [662,1527,1885, 2446, 2561, 2616, 2656, 2676, 2677],
+	"FRAME":      [423,1205,1952, 2399, 2568, 2642, 2671, 2677, 2677],
+	"RTCSA2021":  [155,859,1554, 2063, 2458, 2577, 2677, 2677, 2677],
+	"Batch-MoT":   [333,599,1086, 1652, 2151, 2436, 2560, 2610, 2639],
 	"fifo":       [473,785,955, 1206, 1453, 1584, 1773, 1954, 2036],
-	"cf_batch":   [333,599,1086, 1652, 2151, 2436, 2560, 2610, 2639],
+	"fifo_batch": [662,1527,1885, 2446, 2561, 2616, 2656, 2676, 2677],
 }
 series_data = {
 	label: [value / 200 for value in values]
@@ -47,11 +47,11 @@ plt.ylim(0, max(max(vals) for vals in series_data.values()) * 1.1)
 # 标签、标题、图例
 plt.xlabel(xlabel)
 plt.ylabel(ylabel)
-plt.title(title)
+# plt.title(title)
 plt.legend()
 plt.grid(True, linestyle=":", alpha=0.7)
 
 # 导出
 plt.tight_layout()
-plt.savefig("non_critical_throughput.png", dpi=300)
-print("图像已保存为 'non_critical_throughput.png'")
+plt.savefig("Non_critical_throughput.png", dpi=300)
+print("图像已保存为 'Non_critical_throughput.png'")

@@ -16,11 +16,11 @@ x_ticks = np.arange(10, 55, 5)
 # 使用多个系列数据（示例），键为图例标签
 # 请将数组替换为真实的 deadline miss rate (%) 数据，长度需与 x_values 相同
 series_data = {
-	r"A$^2$R$^2$-Batch":      [15.61,0.96,0, 0, 0, 0, 0, 0, 0],
-	"RTS2022":  [93.95,62.28,36.67,18.86, 7.19, 3.33, 0, 0, 0],
-	"fifo_batch": [77.63,59.12,45, 27.11, 15.96, 7.98, 3.51, 1.23, 0.79],
-	"fifo":       [89.21,82.28,79.65, 72.02, 63.42, 59.04, 51.32, 44.74, 39.04],
-	"cf_batch":   [53.86,31.84,12.98, 4.91, 2.37, 0, 0, 0, 0],
+	"FRAME":      [15.61,0.96,0, 0, 0, 0, 0, 0, 0],
+	"RTCSA2021":  [93.95,62.28,36.67,18.86, 7.19, 3.33, 0, 0, 0],
+	"Batch-MoT":   [53.86,31.84,12.98, 4.91, 2.37, 0, 0, 0, 0],
+	"FIFO":       [89.21,82.28,79.65, 72.02, 63.42, 59.04, 51.32, 44.74, 39.04],
+	"FIFO-Batch": [77.63,59.12,45, 27.11, 15.96, 7.98, 3.51, 1.23, 0.79],
 }
 
 # 检查所有曲线的数据长度
@@ -51,7 +51,7 @@ plt.xticks(x_ticks)
 # 5. 添加标签和标题
 plt.xlabel(xlabel)
 plt.ylabel(ylabel)
-plt.title(title)
+# plt.title(title)
 
 # s 6. 添加图例和网格
 plt.legend()  # 显示图例 (Label 'A' 和 'B')
@@ -59,6 +59,6 @@ plt.grid(True, linestyle=":", alpha=0.7)  # 添加辅助网格线
 
 # 7. 优化布局并保存图像
 plt.tight_layout()  # 自动调整布局，防止标签重叠
-plt.savefig("average_deadline_miss.png", dpi=300)  # 保存为高分辨率PNG，适合论文
+plt.savefig("Average_deadline_miss.png", dpi=300)  # 保存为高分辨率PNG，适合论文
 
-print("图像已保存为 'average_deadline_miss.png'")
+print("图像已保存为 'Average_deadline_miss.png'")

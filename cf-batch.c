@@ -9,6 +9,7 @@
 #include <string.h>
 #include <float.h>
 #include <ctype.h>
+#include <time.h>
 
 typedef struct {
     int size;          // 1..4 internal size index
@@ -156,6 +157,10 @@ int main(int argc, char *argv[]) {
         if (tasks) free(tasks);
         return 1;
     }
+
+    // 记录算法开始时间（用于测量一次完整的调度运行耗时）
+    struct timespec _cf_start_ts, _cf_end_ts;
+    clock_gettime(CLOCK_MONOTONIC, &_cf_start_ts);
 
     // 计算全局最小 deadline
     double global_deadline = DBL_MAX;
@@ -320,6 +325,18 @@ int main(int argc, char *argv[]) {
     } else {
         // 否则，仍有可能存在某些未被分配的任务（例如被跳过的关键任务），把它们标为错失
         for (int i = 0; i < task_count; ++i) if (processed[i] == 0) processed[i] = -1;
+    }
+
+    // 在写输出前记录算法结束时间（只计入调度算法的计算部分，不包括文件 IO）
+    clock_gettime(CLOCK_MONOTONIC, &_cf_end_ts);
+    double _cf_elapsed = (_cf_end_ts.tv_sec - _cf_start_ts.tv_sec) + (_cf_end_ts.tv_nsec - _cf_start_ts.tv_nsec) / 1e9;
+    double _cf_elapsed_ms = _cf_elapsed * 1000.0;
+
+    // 将计时结果追加写入 CSV，仅记录耗时（毫秒）
+    FILE *tf = fopen("cf_batch_timing.csv", "a");
+    if (tf) {
+        fprintf(tf, "%.3f\n", _cf_elapsed_ms);
+        fclose(tf);
     }
 
     // 现在将缓冲的 scheduled 批次一次性写入 output_cf_batch.json
