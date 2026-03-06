@@ -1,0 +1,11 @@
+size,deadline,id,crucial,category
+4,100.0,512_0,1,person
+1,100.0,64_0,1,bicycle
+3,100.0,256_0,0,person
+2,100.0,128_0,0,bicycle
+4,100.0,512_1,1,bicycle
+1,100.0,64_1,1,person
+1,100.0,64_2,0,truck
+1,100.0,64_3,0,bicycle
+2,100.0,128_1,1,car
+2,100.0,128_2,1,bicycle

@@ -3,27 +3,67 @@
     "size": 64,
     "images": [
       {
-        "id": "64_1_car",
+        "id": "64_3_bus",
         "crucial": 1
       },
       {
-        "id": "64_10_car",
+        "id": "64_4_car",
         "crucial": 1
       },
       {
-        "id": "64_7_car",
+        "id": "64_5_truck",
         "crucial": 1
       },
       {
-        "id": "64_8_car",
+        "id": "64_8_truck",
         "crucial": 1
       },
       {
-        "id": "64_0_car",
+        "id": "64_11_truck",
+        "crucial": 1
+      },
+      {
+        "id": "64_15_car",
+        "crucial": 1
+      },
+      {
+        "id": "64_25_truck",
+        "crucial": 1
+      },
+      {
+        "id": "64_27_car",
+        "crucial": 1
+      },
+      {
+        "id": "64_29_car",
+        "crucial": 1
+      },
+      {
+        "id": "64_30_bicycle",
+        "crucial": 1
+      },
+      {
+        "id": "64_34_bicycle",
+        "crucial": 1
+      },
+      {
+        "id": "64_42_truck",
+        "crucial": 1
+      },
+      {
+        "id": "64_48_car",
+        "crucial": 1
+      },
+      {
+        "id": "64_49_person",
+        "crucial": 1
+      },
+      {
+        "id": "64_0_bicycle",
         "crucial": 0
       },
       {
-        "id": "64_11_car",
+        "id": "64_1_bus",
         "crucial": 0
       },
       {
@@ -31,23 +71,151 @@
         "crucial": 0
       },
       {
-        "id": "64_3_car",
+        "id": "64_6_person",
         "crucial": 0
       },
       {
-        "id": "64_4_car",
+        "id": "64_7_truck",
         "crucial": 0
       },
       {
-        "id": "64_5_car",
+        "id": "64_9_bicycle",
         "crucial": 0
       },
       {
-        "id": "64_6_car",
+        "id": "64_10_truck",
         "crucial": 0
       },
       {
-        "id": "64_9_car",
+        "id": "64_12_bus",
+        "crucial": 0
+      },
+      {
+        "id": "64_13_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "64_14_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_16_bus",
+        "crucial": 0
+      },
+      {
+        "id": "64_17_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_18_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_19_person",
+        "crucial": 0
+      },
+      {
+        "id": "64_20_bus",
+        "crucial": 0
+      },
+      {
+        "id": "64_21_car",
+        "crucial": 0
+      },
+      {
+        "id": "64_22_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_23_person",
+        "crucial": 0
+      },
+      {
+        "id": "64_24_car",
+        "crucial": 0
+      },
+      {
+        "id": "64_26_car",
+        "crucial": 0
+      },
+      {
+        "id": "64_28_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_31_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_32_person",
+        "crucial": 0
+      },
+      {
+        "id": "64_33_person",
+        "crucial": 0
+      },
+      {
+        "id": "64_35_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_36_bus",
+        "crucial": 0
+      },
+      {
+        "id": "64_37_bus",
+        "crucial": 0
+      },
+      {
+        "id": "64_38_car",
+        "crucial": 0
+      },
+      {
+        "id": "64_39_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "64_40_person",
+        "crucial": 0
+      },
+      {
+        "id": "64_41_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_43_car",
+        "crucial": 0
+      },
+      {
+        "id": "64_44_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "64_45_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_46_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_47_bus",
+        "crucial": 0
+      },
+      {
+        "id": "64_50_person",
+        "crucial": 0
+      },
+      {
+        "id": "64_51_car",
+        "crucial": 0
+      },
+      {
+        "id": "64_52_truck",
+        "crucial": 0
+      },
+      {
+        "id": "64_53_bus",
         "crucial": 0
       }
     ]
@@ -56,29 +224,189 @@
     "size": 128,
     "images": [
       {
-        "id": "128_2_car",
+        "id": "128_1_bus",
         "crucial": 1
       },
       {
-        "id": "128_0_car",
+        "id": "128_8_bicycle",
+        "crucial": 1
+      },
+      {
+        "id": "128_18_bicycle",
+        "crucial": 1
+      },
+      {
+        "id": "128_19_bus",
+        "crucial": 1
+      },
+      {
+        "id": "128_20_car",
+        "crucial": 1
+      },
+      {
+        "id": "128_34_bus",
+        "crucial": 1
+      },
+      {
+        "id": "128_38_bicycle",
+        "crucial": 1
+      },
+      {
+        "id": "128_0_truck",
         "crucial": 0
       },
       {
-        "id": "128_1_car",
+        "id": "128_2_car",
+        "crucial": 0
+      },
+      {
+        "id": "128_3_car",
+        "crucial": 0
+      },
+      {
+        "id": "128_4_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "128_5_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "128_6_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "128_7_person",
+        "crucial": 0
+      },
+      {
+        "id": "128_9_person",
+        "crucial": 0
+      },
+      {
+        "id": "128_10_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "128_11_truck",
+        "crucial": 0
+      },
+      {
+        "id": "128_12_car",
+        "crucial": 0
+      },
+      {
+        "id": "128_13_person",
+        "crucial": 0
+      },
+      {
+        "id": "128_14_person",
+        "crucial": 0
+      },
+      {
+        "id": "128_15_truck",
+        "crucial": 0
+      },
+      {
+        "id": "128_16_car",
+        "crucial": 0
+      },
+      {
+        "id": "128_17_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "128_21_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "128_22_car",
+        "crucial": 0
+      },
+      {
+        "id": "128_23_truck",
+        "crucial": 0
+      },
+      {
+        "id": "128_24_bicycle",
+        "crucial": 0
+      },
+      {
+        "id": "128_25_bus",
+        "crucial": 0
+      },
+      {
+        "id": "128_26_car",
+        "crucial": 0
+      },
+      {
+        "id": "128_27_bus",
+        "crucial": 0
+      },
+      {
+        "id": "128_28_person",
+        "crucial": 0
+      },
+      {
+        "id": "128_29_person",
+        "crucial": 0
+      },
+      {
+        "id": "128_30_bus",
+        "crucial": 0
+      },
+      {
+        "id": "128_31_person",
+        "crucial": 0
+      },
+      {
+        "id": "128_32_truck",
+        "crucial": 0
+      },
+      {
+        "id": "128_33_bus",
         "crucial": 0
       }
     ]
   },
   {
-    "size": 512,
+    "size": 256,
     "images": [
       {
-        "id": "512_0_car",
+        "id": "256_3_bicycle",
+        "crucial": 1
+      },
+      {
+        "id": "256_16_person",
+        "crucial": 1
+      },
+      {
+        "id": "256_20_person",
+        "crucial": 1
+      },
+      {
+        "id": "256_33_bicycle",
+        "crucial": 1
+      },
+      {
+        "id": "256_39_car",
+        "crucial": 1
+      },
+      {
+        "id": "256_41_person",
+        "crucial": 1
+      },
+      {
+        "id": "256_43_truck",
+        "crucial": 1
+      },
+      {
+        "id": "256_45_person",
         "crucial": 1
       }
     ]
   },
   {
-    "deadline": 25.0
+    "deadline": 100.0
   }
 ]

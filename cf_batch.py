@@ -9,6 +9,7 @@ import sys
 import csv
 import json
 import time
+import os
 from typing import List, Dict
 
 # 时间模型（与 main.c 保持一致）
@@ -71,6 +72,14 @@ def read_tasks_from_file(filename: str) -> List[Task]:
     return tasks
 
 
+def append_timing(elapsed_ms: float) -> None:
+    """将耗时追加写入脚本同目录下的计时文件。"""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    timing_path = os.path.join(script_dir, "cf_batch_timing.csv")
+    with open(timing_path, "a", encoding="utf-8") as tf:
+        tf.write(f"{elapsed_ms:.3f}\n")
+
+
 def main():
     task_file = sys.argv[1] if len(sys.argv) > 1 else "tasks.csv"
     
@@ -79,6 +88,9 @@ def main():
     # 读取任务
     tasks = read_tasks_from_file(task_file)
     if not tasks:
+        end_time = time.time()
+        elapsed = (end_time - start_time) * 1000.0
+        append_timing(elapsed)
         print("没有读取到任何任务，退出。", file=sys.stderr)
         return 1
     
@@ -233,8 +245,7 @@ def main():
     elapsed = (end_time - start_time) * 1000.0  # 转换为毫秒
     
     # 将计时结果追加写入 CSV
-    with open("cf_batch_timing.csv", "a") as tf:
-        tf.write(f"{elapsed:.3f}\n")
+    append_timing(elapsed)
     
     # 生成 output_cf_batch.json
     output_data = []
@@ -285,9 +296,8 @@ def main():
         with open("missed_tasks_cf_batch.json", "w", encoding='utf-8') as mf:
             json.dump(missed_data, mf, indent=2, ensure_ascii=False)
     
-    # 打印统计
-    completed = task_count - missed_total
-    print(f"调度完成：总任务={task_count}, 已完成={completed}, 错失={missed_total}, 累计时间={accumulated_time:.6f}")
+    # 仅打印本次执行耗时（单位毫秒）
+    print(f"{elapsed:.3f}ms")
     
     return 0
 

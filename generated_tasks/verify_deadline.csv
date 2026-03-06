@@ -1,0 +1,6 @@
+size,deadline,id,crucial,category
+2,100.0,128_0,0,truck
+1,100.0,64_0,1,bicycle
+4,100.0,512_0,0,bus
+2,100.0,128_1,0,car
+4,100.0,512_1,0,bus
